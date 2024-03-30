@@ -82,7 +82,4 @@ def main_work(message):
         bot.send_message(message.chat.id, f'<b>Щось пішло не так, повторіть спробу.</b>', parse_mode='html')
 
 
-
-
-
 bot.polling(none_stop=True)
