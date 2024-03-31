@@ -25,12 +25,17 @@ def main(message):
 
 def extract_video_id(urls):
     url = urls[-1]
-    # Паттерн для извлечения идентификатора видео из ссылки YouTube
-    pattern = r'^https?://(?:www\.|m\.)?youtube\.com/watch\?v=([^\s&]+)'
-    match = re.match(pattern, url)
-    if match:
+    # Паттерны для извлечения идентификатора видео из ссылки YouTube
+    pattern_pc = r'^https?://(?:www\.|m\.)?youtube\.com/watch\?v=([^\s&]+)'
+    pattern_mobile = r'^https?://youtu\.be/([^\s?]+)'
+    match_pc = re.match(pattern_pc, url)
+    match_mobile = re.match(pattern_mobile, url)
+    if match_pc:
         print('ID успешно извлечен')
-        return match.group(1)
+        return match_pc.group(1)
+    elif match_mobile:
+        print('ID успешно извлечен')
+        return match_mobile.group(1)
     else:
         print('ID не извлечен')
         return None
@@ -74,7 +79,7 @@ def main_work(message):
         # Проверяем, сообщение этот URL или нет
         if check_for_url(message.text, message.chat.id):
             # bot.send_message(message.chat.id, f'<em>Loading, please wait</em>', parse_mode='html')
-            print('Аудио загружено.')
+            print(f'Аудио загружено пользователем: \n "username" - {message.from_user.username} \n "first_name" - {message.from_user.first_name} \n "last_name" - {message.from_user.last_name}')
         else:
             bot.send_message(message.chat.id, f'<b>Некоректне посилання, спробуйте ще раз!</b>', parse_mode='html')
     except TypeError as e:
